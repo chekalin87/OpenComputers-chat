@@ -162,17 +162,22 @@ local function Sender()
         myMessage = term.read(history, false)
         result = text.trim(myMessage)
         result = text.detab(result, 1)
-        if result == "exit" then 
-            term.clear()
-            thread.kill(rHandler)
-            break
-        end
-        if unicode.len(result) > 0  and unicode.len(result) < 256 then 
-            myMessage = text.trim(name .. ": " .. myMessage)
-            modem.send(serverAddress, primaryPort, myMessage)
+        if string.sub(result, 1, 1) == "/" then 
+            if result == "/exit" then
+                term.clear()
+                thread.kill(rHandler)
+                break
+            else
+                --функция
+            end
+        else
+            if unicode.len(result) > 0  and unicode.len(result) < 256 then 
+                myMessage = text.trim(name .. ": " .. myMessage)
+                modem.send(serverAddress, primaryPort, myMessage)
+            end
+            if #history > 5 then table.remove(history, 1) end
         end
         term.clearLine()
-        if #history > 5 then table.remove(history, 1) end
     end
 end
 
