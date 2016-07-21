@@ -16,6 +16,12 @@ local name, myMessage
 local A, B
 local sHandler, rHandler
 
+local function setColor(cB, cF)
+    local color = {["white"] = 0xFFFFFF, ["black"] = 0x000000, ["green"] = 0x008000, ["red"] = 0xFF0000, ["blue"] = 0x0000FF}
+    if cB ~= nil then gpu.setBackground(color.cB) end
+    if cF ~= nil then gpu.setForeground(color.cF) end
+end
+
 local function Registration()
     local nickname, password, repetition, _, _, address, _, _, message
     term.clear()
@@ -129,19 +135,16 @@ local function Receiver()
                         message = unicode.sub(message, chatWidth + 1)
                     end     
                     -- online list
-                    gpu.setForeground(0xffffff)
-                    gpu.setBackground(0x008000)
+                    setColor("green", "white")
                     gpu.fill(onlineLeftBorder, 1, onlineWidth, 3, " ")
                     term.setCursor(onlineCenter - 3, 2) term.write("ONLINE")    
-                    gpu.setForeground(0x000000)
-                    gpu.setBackground(0xffffff)
+                    setColor("white", "black")
                     gpu.fill(onlineLeftBorder, 4, onlineWidth, B - 7, " ")
                     for i=1,#online,1 do
                         term.setCursor(onlineLeftBorder, i+4) 
                         term.write(' ' .. online[i])
                     end
-                    gpu.setForeground(0xffffff)
-                    gpu.setBackground(0x000000)
+                    setColor("black", "white")
                     -- input field
                     gpu.fill(1, B, A, 1, "—")
                     gpu.fill(1, B - 2, A, 1, "—")
